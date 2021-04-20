@@ -5,12 +5,32 @@ import java.util.Scanner;
 public class Utilidades {
 
 	public static void main(String[] args) {
-
+		float precio = calcularIva();
+		System.out.println("El precio con iva es " + precio);
 		// saludar();
-		saludar("Raul");
-		saludar("Ander");
-		EsCapicua();
+		/*
+		 * saludar("Raul"); saludar("Ander");
+		 * System.out.println("es capicua el numero 1551? " + esCapicua(1551));
+		 * System.out.println("es capicua el numero 1561? " + esCapicua(1561));
+		 */
+	}
 
+	public static float calcularIva() {
+		Scanner scan = new Scanner(System.in);
+		float precio;
+		float iva = 0;
+		float precioSinIva = 0;
+		System.out.println("Di cuanto cuesta el producto para saber su valor final con Iva");
+		precioSinIva = scan.nextFloat();
+		if (precioSinIva >= 1000 && precioSinIva < 2000) {
+			precio = (precioSinIva * 5 / 100) + precioSinIva;
+		} else if (precioSinIva >= 2000 && precioSinIva < 5000) {
+			precio = (precioSinIva * 10 / 100) + precioSinIva;
+		} else if (precioSinIva >= 5000) {
+			precio = (precioSinIva * 25 / 100) + precioSinIva;
+		} else
+			precio = precioSinIva;
+		return precio;
 	}
 
 	/*
@@ -20,26 +40,22 @@ public class Utilidades {
 		System.out.println("Hombreeee que pasa " + nombre);
 	}
 
-	public static boolean EsCapicua() {
+	public static boolean esCapicua(int num) {
 
-		int num;
 		int inv = 0;
 		int resto;
 		int numinicial;
 
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Introduce un numero");
-		num = scan.nextInt();
 		numinicial = num;
 		while (num > 0) {
 			resto = num % 10;
 			inv = inv * 10 + resto;
 			num /= 10;
 		}
-		System.out.println(inv);
-		boolean capicua = numinicial == inv;
-		System.out.println("Este numero es capicua: " + capicua);
-
-		return capicua;
+		/*
+		 * boolean capicua = numinicial == inv; System.out.println(capicua); return
+		 * capicua;
+		 */
+		return numinicial == inv;
 	}
 }
