@@ -2,6 +2,9 @@ package com_elorrieta_objetos;
 
 public class Cancion {
 
+	public static final int DURACION_MAXIMA = 400;
+	public static final int DURACION_MIN = 0;
+
 	// atributos
 	private String nombre;
 	private String grupo;
@@ -34,8 +37,22 @@ public class Cancion {
 		return duracion;
 	}
 
-	public void setDuracion(int duracion) {
-		this.duracion = duracion;
+	public void setDuracion(int minutos, int segundos) throws Exception {
+		int total = (minutos * 60) + segundos;
+		setDuracion(total);
+	}
+
+	/**
+	 * setea la duracion de la cancion
+	 * 
+	 * @param duracion int minutos
+	 * @throws Exception si la duracion > DURACION_MAXIMA
+	 */
+	public void setDuracion(int segundos) throws Exception {
+		if (duracion >= DURACION_MAXIMA || duracion < DURACION_MIN) {
+			throw new Exception("La duracion de ser entre " + DURACION_MIN + " y " + DURACION_MAXIMA);
+		}
+		this.duracion = segundos;
 	}
 
 	@Override
