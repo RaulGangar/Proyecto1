@@ -1,19 +1,19 @@
 package com.elorrieta.bd.pokemon;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Pokemon {
+import com.elorrieta.objetos.Pokemon;
+
+public class ListadoPokemons {
 
 	public static void main(String[] args) {
 
 		try (Connection con = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
 				Statement st = con.createStatement();
-				ResultSet rs = st
-						.executeQuery("SELECT id, nombre, numero, precio, brillante FROM pokemon ORDER BY id ASC; ");
+				ResultSet rs = st.executeQuery("SELECT id,nombre, numero,precio,brillante FROM pokemon; ");
 
 		) {
 
@@ -22,10 +22,14 @@ public class Pokemon {
 				int id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
 				String numero = rs.getString("numero");
-				int precio = rs.getInt("precio");
-				int brillante = rs.getInt("brillante");
+				float precio = rs.getFloat("precio");
+				boolean brillante = rs.getBoolean("brillante");
 
-				System.out.println(id + " - " + nombre + " - " + numero + " - " + precio + " - " + brillante);
+				Pokemon pokemon = new Pokemon(nombre, precio, brillante);
+				pokemon.setId(id);
+				pokemon.setNumero(numero);
+
+				System.out.println(pokemon);
 
 			}
 
@@ -34,4 +38,5 @@ public class Pokemon {
 		}
 
 	}// main
+
 }

@@ -10,7 +10,7 @@ public class InsertarPokemon {
 
 	public static void main(String[] args) {
 
-		String sql = "INSERT INTO pokemon (nombre, numero, precio, brillante) VALUES (?, ?, ?, ?) ;";
+		String sql = "INSERT INTO pokemon (nombre, numero, precio, brillante) VALUES (?,?,?,?) ;";
 
 		try (Scanner sc = new Scanner(System.in);
 				Connection con = DriverManager.getConnection("jdbc:sqlite:pokemon.db");
@@ -19,25 +19,44 @@ public class InsertarPokemon {
 			String salir = "";
 			while (!"s".equalsIgnoreCase(salir)) {
 
-				System.out.println("Inserta el nombre");
+				System.out.println("Dime el nombre");
 				String nombre = sc.nextLine();
-				pst.setString(1, nombre);
-				pst.executeUpdate();
 
-				System.out.println("Inserta el numero");
+				System.out.println("Dime el numero");
 				String numero = sc.nextLine();
+
+				System.out.println("Dime el precio en euros");
+				float precio = Float.parseFloat(sc.nextLine());
+
+				System.out.println("¿Es brillante ? Si o No");
+				String respuesta = sc.nextLine();
+				boolean brillante = ("si".equalsIgnoreCase(respuesta) || "s".equalsIgnoreCase(respuesta)) ? true
+						: false;
+
+				pst.setString(1, nombre);
 				pst.setString(2, numero);
-				pst.executeUpdate();
+				pst.setFloat(3, precio);
+				pst.setBoolean(4, brillante);
 
-				System.out.println("Inserta el precio");
-				int precio = sc.nextInt();
-				pst.setInt(3, precio);
-				pst.executeUpdate();
+				// String h = "INSERT INTO person (name) VALUES
+				// ('ander'),('espinete'),('pepe');"
 
-				System.out.println("Introduce 1 Si es brillante y 0 si no lo es");
-				int brillante = sc.nextInt();
-				pst.setInt(4, brillante);
-				pst.executeUpdate();
+				boolean repetir = true;
+				do {
+					try {
+						int numeroFilasInsertadas = pst.executeUpdate();
+						// System.out.println(pst);
+						// System.out.println(numeroFilasInsertadas);
+						repetir = false;
+						System.out.println("Pokemon guardado");
+
+					} catch (Exception e) {
+						System.out.println("Lo siento pero ese numero ya existe, escribe otro:");
+						numero = sc.nextLine();
+						pst.setString(2, numero);
+					}
+
+				} while (repetir);
 
 				System.out.println("¿ quieres salir ? S-Si     N-No");
 				salir = sc.nextLine();

@@ -1,18 +1,21 @@
 package com.elorrieta.objetos;
 
 public class Pokemon {
-// atributos
+
+	// atributos
+	private int id;
 	private String nombre;
 	private float precio;
-	private int numero;
+	private String numero;
 	private boolean isBrillante;
 
-// constructor
+	// constructor
 	public Pokemon() {
 		super();
+		this.id = 0;
 		this.nombre = "sin nombre";
 		this.precio = 0;
-		this.numero = 0;
+		this.numero = "";
 		this.isBrillante = false;
 	}
 
@@ -27,6 +30,21 @@ public class Pokemon {
 		this.nombre = nombre;
 	}
 
+	public Pokemon(String nombre, float precio, boolean isBrillante) {
+		this(); // super cambiar por this
+		this.nombre = nombre;
+		this.precio = precio;
+		this.isBrillante = isBrillante;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -39,16 +57,17 @@ public class Pokemon {
 		return (isBrillante) ? (precio + 20) : precio;
 	}
 
-	public void setPrecio(float precio) {
-		this.precio = (precio >= 0) ? precio : 0;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
+	/**
+	 * Setea el precio
+	 * 
+	 * @param precio float en euros
+	 * @throws Exception si el precio < 0
+	 */
+	public void setPrecio(float precio) throws Exception {
+		if (precio < 0) {
+			throw new Exception("El precio debe ser 0 o superior");
+		}
+		this.precio = precio;
 	}
 
 	public boolean isBrillante() {
@@ -59,9 +78,18 @@ public class Pokemon {
 		this.isBrillante = isBrillante;
 	}
 
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
 	@Override
 	public String toString() {
-		return "Pokemon [nombre=" + nombre + ", precio=" + getPrecio() + ", numero=" + numero + ", isBrillante="
-				+ isBrillante + "]";
+		return "Pokemon [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", numero=" + numero
+				+ ", isBrillante=" + isBrillante + "]";
 	}
+
 }
